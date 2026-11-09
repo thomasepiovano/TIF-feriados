@@ -2,7 +2,7 @@
 <eshtml idioma="es">
   <cabecera>
     <meta conjunto-caracteres="UTF-8">
-    <recurso rel="icon" referencia="/favicon.ico">
+    <recurso rel="icon" referencia="/calendarioparaelVercel.png">
     <meta nombre="viewport" contenido="width=device-width, initial-scale=1.0">
     <titulo>EsHTML: HTML en Español</titulo>
   </cabecera>
