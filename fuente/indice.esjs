@@ -1,0 +1,90 @@
+
+importar { obtenerJson } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/obtener-json.js"
+importar { validarSecreto } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/validar-secreto.js"
+importar { calcularProximoFeriado } desde "https://desarrollo-aplicaciones.vercel.app/2024/code/calcular-proximo-feriado.js"
+
+document.body.innerHTML = `
+   <style>
+    body {
+  background-color: #151619;
+  color: #E4E4E7;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+  main {
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  background-color: #202126;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+  button {
+  background-color: #45464D;
+  color: #D4D4D8;
+  border: 1px solid #55565D;
+  padding: 10px 20px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+  </style>
+
+  <main>
+    <h1>Próximos feriados de Argentina</h1>
+
+    <p>Ingresá la palabra secreta para continuar:</p>
+
+    <input
+      id="secreto"
+      type="password"
+      placeholder="Palabra secreta"
+    >
+
+    <button id="ingresar" type="button">
+      Ingresar
+    </button>
+
+    <p id="mensaje"></p>
+    <div id="resultado"></div>
+  </main>
+`
+
+const secreto = document.getElementById("secreto")
+const ingresar = document.getElementById("ingresar")
+const mensaje = document.getElementById("mensaje")
+const resultado = document.getElementById("resultado")
+
+const dni = "49279853"
+
+asincrono funcion procesarIngreso() {
+  mensaje.textContent = ""
+  resultado.textContent = ""
+
+  ingresar.disabled = verdadero
+
+  si (esperar validarSecreto(dni, secreto.value)) {
+    mensaje.textContent = "Autenticación correcta"
+
+    const feriados = esperar obtenerJson(
+      "https://api.argentinadatos.com/v1/feriados/"
+    )
+
+    const proximoFeriado = calcularProximoFeriado(feriados)
+
+    resultado.innerHTML = `
+      <h2>El próximo feriado es:</h2>
+      <p>${proximoFeriado.nombre}</p>
+      <p>${proximoFeriado.fecha}</p>
+    `
+  } sino {
+    mensaje.textContent = "Palabra secreta inválida"
+  }
+
+  ingresar.disabled = falso
+}
+
+ingresar.addEventListener("click", procesarIngreso)
